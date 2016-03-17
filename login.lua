@@ -42,11 +42,31 @@ local function procuraFacebookCallback( event )
         print( "Não tem Facebok" )
         coronium:run("insertGuessPlayer", globals.player, insertFacebookCallback)
     end
-    
+end
+
+local function textListener( event )
+
+    if ( event.phase == "began" ) then
+        -- user begins editing defaultField
+        print( event.text )
+
+    elseif ( event.phase == "ended" or event.phase == "submitted" ) then
+        
+        print( event.target.text )
+
+    elseif ( event.phase == "editing" ) then
+        print( event.newCharacters )
+        print( event.oldText )
+        print( event.startPosition )
+        print( event.text )
+    end
 end
 
 local function localUser( event )
     printPlayer()
+    local defaultField = native.newTextField( display.contentCenterX, display.contentCenterY/2, display.contentWidth, 30 )
+    defaultField:addEventListener( "userInput", textListener )
+    print( "text" )
 
     
 end
@@ -83,8 +103,12 @@ function scene:show( event )
         local btnFacebook = Botao.new("Login Facebook", 50)
         local btnLocal    = Botao.new("Local User", 56)
 
+
+
         btnFacebook:addEventListener( "tap", facebookUser )
         btnLocal:addEventListener( "tap", localUser )
+
+        
 
         sceneGroup:insert( btnFacebook )
         sceneGroup:insert( btnLocal )

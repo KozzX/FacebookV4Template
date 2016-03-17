@@ -39,6 +39,8 @@ function scene:show( event )
         local btn5  = Botao.new(globals.player.last_name, 29)
         local btn6  = Botao.new(globals.player.age_range, 35)
         local btn7  = Botao.new(globals.player.gender, 41)
+
+        
         
         
     end 
