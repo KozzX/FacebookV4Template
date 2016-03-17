@@ -7,6 +7,7 @@
 local globals = require( "globals" )
 local composer = require( "composer" )
 local coronium = require( "mod_coronium" )
+local Database = require( "Database" )
 
 coronium:init({ appId = globals.appId, apiKey = globals.apiKey })
 coronium.showStatus = true
@@ -39,6 +40,7 @@ end
 local OneSignal = require("plugin.OneSignal")
 OneSignal.Init("326db8a3-0864-4a20-ae44-f9af74fd9f89", "125948127213", DidReceiveRemoteNotification)
 
+
 local function selectCallback( event )
     local result = event.result
     print(result)
@@ -46,6 +48,7 @@ local function selectCallback( event )
         print( "tem" )
         globals.player = 
         {
+            id = result[1].id,
             facebookId = result[1].facebookId,
             userId = result[1].userId,
             pushToken = result[1].pushToken,
@@ -60,35 +63,40 @@ local function selectCallback( event )
             timezone = result[1].timezone,
             updated_time = result[1].updated_time,
         }
-        print( result[1].facebookId,result[1].userId, result[1].name )
+        print( result[1].id, result[1].facebookId, result[1].name )
         composer.gotoScene( "mainmenu", "fade", 500 )
 
     else
         print( "não tem" )
         composer.gotoScene( "login", "fade", 500 )
-        
     end
-end
-
-local function selecionar(  )
-    coronium:run("selectGuessPlayer",globals.player,selectCallback)    
 end
 
 function IdsAvailable(userId, pushToken)
     print("userId:" .. userId)
-    globals.player.userId = userId
+    globals.player.pushId = userId
     if (pushToken) then -- nil if there was a connection issue or on iOS notification permissions were not accepted.
         print("pushToken:" .. pushToken)
         globals.player.pushToken = pushToken 
-    end
-    selecionar()
+    end  
 end
 
-if system.getInfo("platformName") ~= "Win" then
-    OneSignal.IdsAvailableCallback(IdsAvailable)
-else
-    globals.player.userId = "BBBBB"
-    globals.player.pushToken = "TTTTT"
-    selecionar()
+OneSignal.IdsAvailableCallback(IdsAvailable)
+
+local function iniciarGame( )
+    local lista = listarJogadores()
+    if (#lista <= 0) then
+        print( "não tem db " )
+        composer.gotoScene( "login", "fade", 500 )        
+    else
+        print( "tem db" )
+        if ( #lista == 1) then
+            globals.player.id = lista[1].id
+            globals.player.facebookId = lista[1].facebookId
+            print( globals.player.id )
+            coronium:run( "selectPlayer", globals.player, selectCallback )
+        end
+    end
 end
+iniciarGame()
 

@@ -97,7 +97,7 @@ end
 
 local function userOffline()
 	
-	globals.player.facebookId = "000000"
+	globals.player.facebookId = "000001"
 	globals.player.name = "Corona SDK"
 	globals.player.first_name = "Corona"
 	globals.player.last_name = "SKD"

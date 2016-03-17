@@ -13,58 +13,67 @@ end
 
 -- Set up the table if it doesn't exist
 local tablesetup = [[CREATE TABLE IF NOT EXISTS JOGADOR (
-						id integer primary key, 
+						id integer primary key,
 						facebookId text, 
-						userId text
+						name text
 					);]]
 
 print( tablesetup )
 db:exec( tablesetup )
 
-function primeiroJogo(  )
+function jogadorExiste( id )
 	local primeiro = true
-	for row in db:nrows("SELECT id FROM JOGADOR WHERE id = 1") do
+	for row in db:nrows("SELECT id FROM JOGADOR WHERE id = "..id) do
 		primeiro = false
 	end	
 	return primeiro
 end
 
-function salvarFacebookId( facebookId )
-	local tableupdate = [[UPDATE JOGADOR SET facebookId=']]..facebookId..[[' WHERE id = 1;]]
+function salvarFacebookId( facebookId, id )
+	local tableupdate = [[UPDATE JOGADOR SET facebookId=']]..facebookId..[[' WHERE id = ]].. id ..[[;]]
 	print(tableupdate)
 	db:exec( tableupdate )	
 end
 
-function salvarUserId( userId )
-	local tableupdate = [[UPDATE JOGADOR SET userId=']]..userId..[[' WHERE id = 1;]]
+function salvarname( name, id )
+	local tableupdate = [[UPDATE JOGADOR SET name=']]..name..[[' WHERE id = ]].. id ..[[;]]
 	print(tableupdate)
 	db:exec( tableupdate )	
 end
 
-function preencherTabelas( id )
-	local tablefill = [[INSERT INTO JOGADOR VALUES(]]..id..[[, 'none', 'none');]]
+function adicionarJogador( id, facebookId, name )
+	local tablefill = [[INSERT INTO JOGADOR VALUES(]]..id..[[, ']].. facebookId .. [[', ']].. name ..[[');]]
 	print( tablefill )
 	db:exec( tablefill )
 end
 
-function buscarJogador( )
+function buscarJogador( id )
 	local result = {}
-	for row in db:nrows("SELECT facebookId, userId FROM JOGADOR WHERE id = 1") do
+	for row in db:nrows("SELECT id, facebookId, name FROM JOGADOR WHERE id = " .. id) do
 	    result = 
 	    {
+	    	id = row.id,
 	    	facebookId=row.facebookId,
-	    	userId=row.userId,
-		}	    
+	    	name=row.name,
+		}    
 	end
 	return result
 end
 
-if primeiroJogo() then
-	print( "primeiro" )
-	preencherTabelas()
+function listarJogadores( )
+	local result = {}
+	local i = 1
+	for row in db:nrows("SELECT id, facebookId, name FROM JOGADOR ORDER BY id") do
+	    result[i] = 
+	    {
+	    	id = row.id,
+	    	facebookId=row.facebookId,
+	    	name=row.name,
+		}
+		i = i + 1	    
+	end
+	return result
 end
-
-
 
 local tablesetup = [[DROP TABLE JOGADOR;]]
 print( tablesetup )

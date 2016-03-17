@@ -32,7 +32,13 @@ function scene:show( event )
 
     elseif phase == "did" then
 
-        local btnLogin  = Botao.new("Menu", 90)
+        local btn1  = Botao.new(globals.player.id, 5)
+        local btn2  = Botao.new(globals.player.facebookId, 11)
+        local btn3  = Botao.new(globals.player.name, 17)
+        local btn4  = Botao.new(globals.player.first_name, 23)
+        local btn5  = Botao.new(globals.player.last_name, 29)
+        local btn6  = Botao.new(globals.player.age_range, 35)
+        local btn7  = Botao.new(globals.player.gender, 41)
         
         
     end 
