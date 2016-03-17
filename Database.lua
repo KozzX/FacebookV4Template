@@ -41,8 +41,8 @@ function salvarUserId( userId )
 	db:exec( tableupdate )	
 end
 
-function preencherTabelas(  )
-	local tablefill = [[INSERT INTO JOGADOR VALUES(1, 'none', 'none');]]
+function preencherTabelas( id )
+	local tablefill = [[INSERT INTO JOGADOR VALUES(]]..id..[[, 'none', 'none');]]
 	print( tablefill )
 	db:exec( tablefill )
 end

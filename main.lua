@@ -41,6 +41,7 @@ OneSignal.Init("326db8a3-0864-4a20-ae44-f9af74fd9f89", "125948127213", DidReceiv
 
 local function selectCallback( event )
     local result = event.result
+    print(result)
     if result ~= nil then
         print( "tem" )
         globals.player = 
@@ -58,11 +59,13 @@ local function selectCallback( event )
             pictureUrl = result[1].pictureUrl,
             timezone = result[1].timezone,
             updated_time = result[1].updated_time,
-
         }
         print( result[1].facebookId,result[1].userId, result[1].name )
+        composer.gotoScene( "mainmenu", "fade", 500 )
+
     else
         print( "não tem" )
+        composer.gotoScene( "login", "fade", 500 )
         
     end
 end
@@ -84,7 +87,7 @@ end
 if system.getInfo("platformName") ~= "Win" then
     OneSignal.IdsAvailableCallback(IdsAvailable)
 else
-    globals.player.userId = "UUUUU"
+    globals.player.userId = "BBBBB"
     globals.player.pushToken = "TTTTT"
     selecionar()
 end

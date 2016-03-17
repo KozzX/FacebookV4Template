@@ -44,9 +44,8 @@ function scene:show( event )
                 cont = cont + 1
                 print( cont )
                 if (globals.isCarregado == true) then
-                    player = facebookPlayer()
-                    local btnNome = Botao.new(player.name,80)
-                    coronium:run("insertGuessPlayer",player)
+                    local btnNome = Botao.new(globals.player.name,80)
+                    coronium:run("insertGuessPlayer",globals.player)
                     timer.cancel( timer1 )
                 elseif (globals.isCancelado == true) then
                     timer.cancel( timer1 )

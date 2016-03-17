@@ -95,13 +95,35 @@ local function facebookCallback( event )
 	end
 end
 
+local function userOffline()
+	
+	globals.player.facebookId = "000000"
+	globals.player.name = "Corona SDK"
+	globals.player.first_name = "Corona"
+	globals.player.last_name = "SKD"
+	globals.player.age_range = "21"
+	globals.player.link = "0"
+	globals.player.gender = "male"
+	globals.player.locale = "0"
+	globals.player.pictureUrl = "0"
+	globals.player.timezone = "0"
+	globals.player.updated_time = "0"
+	
+	globals.isCarregado = true
+
+end
+
 
 function facebookLogin( )
 	if facebook.isActive then
 		local accessToken = facebook.getCurrentAccessToken()
 		if accessToken == nil then
 			print( "Need to log in" )
-			facebook.login( facebookCallback )
+			if system.getInfo("platformName") ~= "Win" then
+				facebook.login( facebookCallback )
+			else
+				userOffline()
+			end
 		else
 			print( "Already logged in with needed permissions" )
 			facebook.login( facebookCallback )
