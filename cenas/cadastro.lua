@@ -51,6 +51,7 @@ function scene:show( event )
         edtNome = native.newTextField( display.contentCenterX, display.contentCenterY/2, display.contentWidth-50, 50 )
         edtNome.placeholder = "Seu nome..."
         edtNome:addEventListener( "userInput", textListener )
+        native.setKeyboardFocus( edtNome )
         sceneGroup:insert( edtNome )                
 
     elseif phase == "did" then

@@ -40,8 +40,8 @@ function scene:show( event )
 
     elseif phase == "did" then
 
-        btnFacebook = Botao.newFacebook("Facebook", 45)
-        btnLocal    = Botao.new("Local User", 60)
+        btnFacebook = Botao.newFacebook("Facebook", 50-6)
+        btnLocal    = Botao.new("Local User", 50+6)
 
         btnFacebook:addEventListener( "tap", facebookUser )
         btnLocal:addEventListener( "tap", localUser )
