@@ -38,6 +38,11 @@ settings =
         {
         	publisherId = 'com.spiralcodestudio'
         },
+        ["plugin.mwc"] = 
+        { 
+        	publisherId = "com.xibalbastudios" 
+        },
+
     },
 
 	

@@ -89,9 +89,11 @@ function scene:show( event )
 
     if phase == "will" then
 
+        spinIcon = SpinIcon.new()
+
     elseif phase == "did" then
 
-        spinIcon = SpinIcon.new()
+        
 
         if (extras.tipoLogin == "facebook") then
             facebookUser()

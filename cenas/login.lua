@@ -8,6 +8,7 @@ local sceneName = ...
 
 local composer = require( "composer" )
 local Botao = require( "objetos.Botao" )
+local globals = require( "globals" )
 
 
 -- Load scene with same root filename as this file
@@ -24,11 +25,12 @@ end
 
 local function localUser( event )
     print( event.target.name )
-    composer.gotoScene( "cenas.cadastro", "slideDown", 500 )    
+    composer.gotoScene( "cenas.cadastro", "slideLeft", 500 )    
 end
 
 function scene:create( event )
     local sceneGroup = self.view
+
  
 end
 
@@ -37,6 +39,7 @@ function scene:show( event )
     local phase = event.phase
 
     if phase == "will" then
+        
 
     elseif phase == "did" then
 

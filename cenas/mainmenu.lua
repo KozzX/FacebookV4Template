@@ -16,6 +16,8 @@ local globals = require( "globals" )
 -- Load scene with same root filename as this file
 local scene = composer.newScene(  )
 
+
+
 ---------------------------------------------------------------------------------
 
 function scene:create( event )
@@ -29,6 +31,8 @@ function scene:show( event )
     local phase = event.phase
 
     if phase == "will" then
+
+        
 
     elseif phase == "did" then
 

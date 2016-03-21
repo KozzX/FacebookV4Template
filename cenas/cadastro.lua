@@ -14,6 +14,8 @@ local globals = require( "globals" )
 local scene = composer.newScene(  )
 local edtNome
 
+
+
 ---------------------------------------------------------------------------------
 local function textListener( event )
 
@@ -24,12 +26,16 @@ local function textListener( event )
     elseif ( event.phase == "ended" or event.phase == "submitted" ) then
         
         print( event.target.text )
-        globals.player.name = event.target.text
-        composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="local" } } )
+        if (#event.target.text > 0) then
+            globals.player.name = event.target.text
+            composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="local" } } )
+        end
+        
 
 
 
     elseif ( event.phase == "editing" ) then
+        print( #event.text )
         print( event.newCharacters )
         print( event.oldText )
         print( event.startPosition )
@@ -47,8 +53,9 @@ function scene:show( event )
     local phase = event.phase
 
     if phase == "will" then
+        
 
-        edtNome = native.newTextField( display.contentCenterX, display.contentCenterY/2, display.contentWidth-50, 50 )
+        edtNome = native.newTextField( display.contentCenterX, 50, display.contentWidth-50, 50 )
         edtNome.placeholder = "Seu nome..."
         edtNome:addEventListener( "userInput", textListener )
         native.setKeyboardFocus( edtNome )
