@@ -12,7 +12,13 @@ local Database = require( "utils.Database" )
 coronium:init({ appId = globals.appId, apiKey = globals.apiKey })
 coronium.showStatus = true
 
-display.setDefault( "background", 0.2, 0.2, 0.2 )
+local g = graphics.newGradient(  { 139/255, 225/255, 255/255 },  { 255/255, 139/255, 207/255 }, "right" )
+
+display.setDefault( "background", g)
+local bg = display.newRect( display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight )
+bg:setFillColor( g )
+bg:toBack( )
+--bg:rotate( 45 )
 
 -- This function gets called when the user opens a notification or one is received when the app is open and active.
 -- Change the code below to fit your app's needs.
@@ -66,7 +72,13 @@ local function selectCallback( event )
             updated_time = result[1].updated_time,
         }
         print( result[1].id, result[1].facebookId, result[1].name )
-        composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="facebook" } } )
+        if (globals.player.facebookId=="offline") then
+            print( "local" )
+            composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="local" } } )
+        else
+            print( "faceboook" )
+            composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="facebook" } } )
+        end
 
     else
         print( "não tem" )
@@ -95,6 +107,7 @@ local function iniciarGame( )
         if ( #lista == 1) then
             globals.player.id = lista[1].id
             globals.player.facebookId = lista[1].facebookId
+            globals.player.name = lista[1].name
             print( globals.player.id )
             coronium:run( "selectPlayer", globals.player, selectCallback )
         end

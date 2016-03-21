@@ -5,6 +5,11 @@ local globals =
 	appId = "ec2-54-207-21-98.sa-east-1.compute.amazonaws.com",
 	apiKey = "694fa5e9-162f-42ef-9e8a-ee59dd5e321a",
 	player = {},
+	colors = 
+	{
+		verdeBarra = { r = 139/255, g = 225/255, b = 255/255 },
+		vermelhoBarra = { r = 255/255, g = 139/255, b = 207/255 },
+	},
 	
 }
 

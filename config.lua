@@ -3,7 +3,7 @@ application =
 
 	content =
 	{
-		width = 400,
+		width = 480,
 		height = 800, 
 		scale = "none",
 		fps = 60,

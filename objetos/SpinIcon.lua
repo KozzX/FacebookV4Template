@@ -7,6 +7,7 @@ function new(  )
     spinIcon.height = spinIcon.height/9 
 
     local function spin(  )
+    	print( "gira" )
         spinIcon:rotate( 9 )
         if (spinIcon.rotation%360 == 0) then
             timer.pause( spinTimer )

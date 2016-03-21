@@ -22,7 +22,7 @@ local spinIcon
 
 
 ---------------------------------------------------------------------------------
-local function insertFacebookCallback( event )
+local function insertCallback( event )
     local result = event.result
     if result.affected_rows > 0 then
         globals.player.id = result.insert_id
@@ -42,21 +42,27 @@ local function procuraFacebookCallback( event )
         composer.gotoScene( "cenas.mainmenu", "fade", 500 ) 
     else
         print( "Não tem Facebok" )
-        coronium:run("insertGuessPlayer", globals.player, insertFacebookCallback)
+        coronium:run("insertGuessPlayer", globals.player, insertCallback)
     end
 end
 
-
-
 local function localUser( )
+    globals.player.facebookId = "offline"
     printPlayer()
-    composer.gotoScene( "cenas.mainmenu", "fade", 500 ) 
+    timerLocal = timer.performWithDelay( 1500, function (  )
+        if (globals.player.id == nil) then
+            coronium:run("insertGuessPlayer", globals.player, insertCallback)            
+        else
+            composer.gotoScene( "cenas.mainmenu", "fade", 500 )         
+        end
+    end , 1 )
+    
     --Ações para tratar usuário local    
     
 end
 
 local function facebookUser( )
-    facebookLogin()
+    facebookLogin( )
     local cont = 0
     timer1 = timer.performWithDelay( 1500, function (  )
         cont = cont + 1
@@ -110,6 +116,7 @@ function scene:hide( event )
         
 
     elseif phase == "did" then
+        remover()
         -- Called when the scene is now off screen
 
     end 

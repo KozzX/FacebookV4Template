@@ -24,7 +24,7 @@ end
 
 local function localUser( event )
     print( event.target.name )
-    composer.gotoScene( "cenas.cadastro", "slideLeft", 500 )    
+    composer.gotoScene( "cenas.cadastro", "slideDown", 500 )    
 end
 
 function scene:create( event )

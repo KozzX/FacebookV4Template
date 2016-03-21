@@ -48,14 +48,14 @@ function scene:show( event )
 
     if phase == "will" then
 
-               
-
-    elseif phase == "did" then
-
         edtNome = native.newTextField( display.contentCenterX, display.contentCenterY/2, display.contentWidth-50, 50 )
         edtNome.placeholder = "Seu nome..."
         edtNome:addEventListener( "userInput", textListener )
-        sceneGroup:insert( edtNome ) 
+        sceneGroup:insert( edtNome )                
+
+    elseif phase == "did" then
+
+        
         
     end 
 end
