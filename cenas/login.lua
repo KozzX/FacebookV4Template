@@ -7,20 +7,28 @@
 local sceneName = ...
 
 local composer = require( "composer" )
-local Botao = require( "Botao" )
-local globals = require( "globals" )
---local Database = require( "Database" )
-
+local Botao = require( "objetos.Botao" )
 
 
 -- Load scene with same root filename as this file
 local scene = composer.newScene(  )
+local btnFacebook 
+local btnLocal
+
 
 ---------------------------------------------------------------------------------
+local function facebookUser( event )
+    print( event.target )
+    composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="facebook" } } )
+end
+
+local function localUser( event )
+    print( event.target.name )
+    composer.gotoScene( "cenas.cadastro", "slideLeft", 500 )    
+end
 
 function scene:create( event )
     local sceneGroup = self.view
-
  
 end
 
@@ -32,16 +40,14 @@ function scene:show( event )
 
     elseif phase == "did" then
 
-        local btn1  = Botao.new(globals.player.id, 5)
-        local btn2  = Botao.new(globals.player.facebookId, 11)
-        local btn3  = Botao.new(globals.player.name, 17)
-        local btn4  = Botao.new(globals.player.first_name, 23)
-        local btn5  = Botao.new(globals.player.last_name, 29)
-        local btn6  = Botao.new(globals.player.age_range, 35)
-        local btn7  = Botao.new(globals.player.gender, 41)
+        btnFacebook = Botao.newFacebook("Facebook", 45)
+        btnLocal    = Botao.new("Local User", 60)
 
-        
-        
+        btnFacebook:addEventListener( "tap", facebookUser )
+        btnLocal:addEventListener( "tap", localUser )
+
+        sceneGroup:insert( btnFacebook )
+        sceneGroup:insert( btnLocal )
         
     end 
 end
@@ -55,6 +61,10 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
+        btnFacebook:removeEventListener( "tap", facebookUser )
+        btnLocal:removeEventListener( "tap", localUser )
+        
+
     elseif phase == "did" then
         -- Called when the scene is now off screen
 

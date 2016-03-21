@@ -7,10 +7,12 @@
 local globals = require( "globals" )
 local composer = require( "composer" )
 local coronium = require( "mod_coronium" )
-local Database = require( "Database" )
+local Database = require( "utils.Database" )
 
 coronium:init({ appId = globals.appId, apiKey = globals.apiKey })
 coronium.showStatus = true
+
+display.setDefault( "background", 0.2, 0.2, 0.2 )
 
 -- This function gets called when the user opens a notification or one is received when the app is open and active.
 -- Change the code below to fit your app's needs.
@@ -64,11 +66,11 @@ local function selectCallback( event )
             updated_time = result[1].updated_time,
         }
         print( result[1].id, result[1].facebookId, result[1].name )
-        composer.gotoScene( "mainmenu", "fade", 500 )
+        composer.gotoScene( "cenas.loading", { effect = "fade", time = 300, params={tipoLogin="facebook" } } )
 
     else
         print( "não tem" )
-        composer.gotoScene( "login", "fade", 500 )
+        composer.gotoScene( "cenas.login", "fade", 500 )
     end
 end
 
@@ -87,7 +89,7 @@ local function iniciarGame( )
     local lista = listarJogadores()
     if (#lista <= 0) then
         print( "não tem db " )
-        composer.gotoScene( "login", "fade", 500 )        
+        composer.gotoScene( "cenas.login", "fade", 500 )        
     else
         print( "tem db" )
         if ( #lista == 1) then
